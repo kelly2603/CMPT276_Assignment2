@@ -65,7 +65,7 @@
                     </select>
                 </div>
                 <input type="hidden" name="studentId">
-                <button class="nav-btns" id="submit">Submit</button>
+                <button class="nav-btns" type="submit">Submit</button>
             </form>
             <div th:if="${successMessage}" class="success-message" th:text="${successMessage}"></div>
             <div th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></div>
@@ -75,7 +75,7 @@
             <button class="nav-btns" id="edit-btn">Edit</button>
             <button class="nav-btns" id="display-btn">Display</button>
             <div class="btns-container">
-                <button class="nav-btns" id="done-btn">Done</button>
+                <button class="nav-btns" onclick="goToDatatable()">Done</button>
             </div>
         </div>
     </div>

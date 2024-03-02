@@ -96,7 +96,12 @@ function handleEditButton(){
         if (!e.target.classList.contains('std-btn')) {
             return;
         }
-
+        const studentID = e.target.getAttribute("student-id");
+        var stdIdInput = document.createElement("input");
+        stdIdInput.setAttribute("type", "hidden");
+        stdIdInput.setAttribute("name", "studentId");
+        stdIdInput.setAttribute("student-id", studentID);
+        formElement.appendChild(stdIdInput);
         formElement.style.display = "block";
     });
 }
@@ -107,7 +112,7 @@ function showDisplay(){
 }
 
 //======================== DONE BUTTON ========================
-function handleDoneButton(){
+function goToDatatable(){
     window.location.href = "/students/datatable";
 }
 
