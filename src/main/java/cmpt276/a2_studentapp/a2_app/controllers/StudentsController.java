@@ -45,10 +45,14 @@ public class StudentsController {
         int newWeight = Integer.parseInt(newstudent.get("weight"));
         int newHeight = Integer.parseInt(newstudent.get("height"));
         String newHairColor = newstudent.get("hairColor");
-        int newGpa = Integer.parseInt(newstudent.get("hairColor"));
+        int newGpa = Integer.parseInt(newstudent.get("gpa"));
         String newGender = newstudent.get("gender");
-        studentsRepo.save(new Student(newName,newWeight,newHeight,newHairColor,newGpa,newGender));
-        response.setStatus(201);
+
+        //add student
+        studentsRepo.save(new Student(newName, newWeight, newHeight, newHairColor, newGpa, newGender));
+        
+        response.setStatus(HttpServletResponse.SC_CREATED);
+
         return "students/datatable";
     }
     

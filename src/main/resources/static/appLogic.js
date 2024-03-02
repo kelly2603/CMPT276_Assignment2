@@ -5,7 +5,7 @@ var dataTableElement = document.getElementById("datatable")
 var cells = document.getElementsByTagName("td")
 const tbodyElement = document.querySelector("tbody")
 const displayBoard = document.getElementById("display-board")
-const formElement = document.querySelector('form')
+const formElement = document.querySelector(".std-form")
 
 const addButton = document.getElementById("add-btn")
 const delButton = document.getElementById("del-btn")
@@ -16,10 +16,9 @@ const doneButton = document.getElementById("done-btn")
 //================ Application Functions ===============
 
 function startApp(){
-    window.location.href = "/students/datatable.html";
+    window.location.href = "/students/datatable";
     formElement.style.display = "none";
     displayBoard.style.display = "none";
-
 }
 
 addButton.addEventListener("click", handleAddButton)
@@ -110,3 +109,5 @@ function showDisplay(){
 function handleDoneButton(){
     window.location.href = "/students/datatable.html";
 }
+
+startApp();
