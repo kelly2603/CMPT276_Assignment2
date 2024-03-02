@@ -29,13 +29,6 @@ public class StudentsController {
     @Autowired
     private StudentRepository studentsRepo;
 
-    public StudentsController() {
-        // users.add(new Users("John", "password", 30));
-        // users.add(new Users("Jane", "password", 25));
-        // users.add(new Users("Doe", "password", 35));
-
-    }
-
     //Get all students from database and dispay them
     @GetMapping("/students/datatable")
     public String getAllStudents(Model model) {
@@ -43,13 +36,6 @@ public class StudentsController {
         model.addAttribute("std", students);
         return "students/datatable";
     }
-
-    // @GetMapping("/students/add")
-    // public String getAddStudent(Model model) {
-    //     List<Student> students = studentsRepo.findAll();
-    //     model.addAttribute("std", students);
-    //     return "students/add";
-    // }
     
     //adding student process after form is submitted
     @PostMapping("/students/add")
@@ -65,14 +51,6 @@ public class StudentsController {
         response.setStatus(201);
         return "students/datatable";
     }
-
-    //display delete student page
-    @GetMapping("/students/delete")
-    public String getDeleteStudent(Model model) {
-        List<Student> students = studentsRepo.findAll();
-        model.addAttribute("std", students);
-        return "students/delete";
-    }
     
     //deleting student
     @DeleteMapping("/students/{studentID}")
@@ -87,7 +65,6 @@ public class StudentsController {
         }
     }
 
-    
     @PostMapping("/students/edit")
     public String editStudent(@RequestParam Map<String, String> editstudent, HttpServletResponse response) {
         System.out.println("Edit student");
