@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display student board</title>
+    <link rel="stylesheet" href="studentApp.css">
+</head>
+<body>
+    <div class="app">
+        <div id="display-board">
+            <ul>
+                <li th:each="user:${us}">
+                    <span th:text="${student.name + ' ' + student.gpa}" 
+                          style="display: block"
+                          th:style="'width: '+${student.weight}*0.7+'px';
+                          'height: '+${student.height}*0.7+'px';
+                          'border: 3px solid '+${student.hairColor};
+                          ${student.gender == 'female' ? 'color: #ed8aba;' : 'color: #5270f2;'}"></span>
+                </li>
+            </ul>
+        </div>
+        <div class="btns-container">
+            <button class="nav-btns" id="done-btn">Back</button>
+        </div>
+    </div>
+    <script src="/appLogic.js" defer></script>
+</body>
+</html>

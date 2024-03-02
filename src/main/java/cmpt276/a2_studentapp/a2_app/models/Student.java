@@ -15,9 +15,10 @@ public class Student {
     private String hairColor;
     private double gpa;
     private String gender;
-    public void Students() {
+    
+    public Student() {
     }
-    public void Students(String name, int weight, int height, String hairColor, double gpa, String gender) {
+    public Student(String name, int weight, int height, String hairColor, double gpa, String gender) {
         this.name = name;
         this.weight = weight;
         this.height = height;

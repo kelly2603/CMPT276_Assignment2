@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StudentRepository extends JpaRepository<Student,Integer> {
     List<Student> findByName(String name);
-    List<Student> findByNameAndHeight(String name, int height);
+    List<Student> findBySid(int sid);
 
 }

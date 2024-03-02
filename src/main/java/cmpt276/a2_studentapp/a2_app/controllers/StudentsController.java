@@ -2,11 +2,15 @@ package cmpt276.a2_studentapp.a2_app.controllers;
 
 import java.util.List;
 
-import org.hibernate.mapping.Map;
+import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import cmpt276.a2_studentapp.a2_app.models.Student;
@@ -15,6 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -22,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class StudentsController {
     @Autowired
-    private StudentRepository studentsRepository;
+    private StudentRepository studentsRepo;
 
     public StudentsController() {
         // users.add(new Users("John", "password", 30));
@@ -31,13 +36,22 @@ public class StudentsController {
 
     }
 
-    @GetMapping("/students/all")
+    //Get all students from database and dispay them
+    @GetMapping("/students/datatable")
     public String getAllStudents(Model model) {
-        List<Student> students = studentsRepository.findAll(); // db
-        model.addAttribute("students", students);
-        return "students/all";
+        List<Student> students = studentsRepo.findAll(); // db
+        model.addAttribute("std", students);
+        return "students/datatable";
     }
 
+    // @GetMapping("/students/add")
+    // public String getAddStudent(Model model) {
+    //     List<Student> students = studentsRepo.findAll();
+    //     model.addAttribute("std", students);
+    //     return "students/add";
+    // }
+    
+    //adding student process after form is submitted
     @PostMapping("/students/add")
     public String addStudent(@RequestParam Map<String, String> newstudent, HttpServletResponse response) {
         System.out.println("ADD student");
@@ -47,10 +61,68 @@ public class StudentsController {
         String newHairColor = newstudent.get("hairColor");
         int newGpa = Integer.parseInt(newstudent.get("hairColor"));
         String newGender = newstudent.get("gender");
-        studentsRepository.save(new Students(newName,newHeight,newHeight,newHairColor,newGpa,newGender));
+        studentsRepo.save(new Student(newName,newWeight,newHeight,newHairColor,newGpa,newGender));
         response.setStatus(201);
-        return "students/addedStudent";
+        return "students/datatable";
+    }
+
+    //display delete student page
+    @GetMapping("/students/delete")
+    public String getDeleteStudent(Model model) {
+        List<Student> students = studentsRepo.findAll();
+        model.addAttribute("std", students);
+        return "students/delete";
     }
     
+    //deleting student
+    @DeleteMapping("/students/{studentID}")
+    public ResponseEntity<String> deleteStudent(int studentId){
+        List<Student> studentList = studentsRepo.findBySid(studentId);
+        if(studentList.isEmpty()){
+            return ResponseEntity.badRequest().body("Can't find target student");
+        }else{
+            Student student = studentList.get(0);
+            studentsRepo.delete(student);
+            return ResponseEntity.ok("Deleted Student");
+        }
+    }
+
+    
+    @PostMapping("/students/edit")
+    public String editStudent(@RequestParam Map<String, String> editstudent, HttpServletResponse response) {
+        System.out.println("Edit student");
+
+        int studentID = Integer.parseInt(editstudent.get("studentId"));
+        String newName = editstudent.get("name");
+        int newWeight = Integer.parseInt(editstudent.get("weight"));
+        int newHeight = Integer.parseInt(editstudent.get("height"));
+        String newHairColor = editstudent.get("hairColor");
+        int newGpa = Integer.parseInt(editstudent.get("hairColor"));
+        String newGender = editstudent.get("gender");
+        
+        List<Student> studentList = studentsRepo.findBySid(studentID); //get student by sid
+
+        if(studentList.isEmpty()){
+            //do other error handling
+            return "/students/edit";
+        }else{
+            Student student = studentList.get(0);
+            student.setName(newName);
+            student.setWeight(newWeight);
+            student.setHeight(newHeight);
+            student.setGpa(newGpa);
+            student.setHairColor(newHairColor);
+            student.setGender(newGender);
+            return "students/datatable";
+        }
+    }
+    /* 
+    */
+
+    // @PostMapping("/students/display")
+    // public String displayStudent(){
+        
+    // }
+
 }   
 
