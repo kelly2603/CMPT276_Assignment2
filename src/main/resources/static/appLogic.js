@@ -11,7 +11,6 @@ const addButton = document.getElementById("add-btn")
 const delButton = document.getElementById("del-btn")
 const editButton = document.getElementById("edit-btn")
 const displayButton = document.getElementById("display-btn")
-const doneButton = document.getElementById("done-btn")
 
 //================ Application Functions ===============
 
@@ -25,7 +24,6 @@ addButton.addEventListener("click", handleAddButton)
 editButton.addEventListener("click", handleEditButton)
 delButton.addEventListener("click", handleDeleteButton)
 displayButton.addEventListener("click", showDisplay)
-doneButton.addEventListener("click", handleDoneButton)
 
 function displayDoneBtn(){
     doneButton.style.display = "inline-block";

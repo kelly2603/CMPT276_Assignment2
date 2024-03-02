@@ -51,10 +51,8 @@ public class StudentsController {
     
             // Check if the save operation was successful
             if (savedStudent != null) {
-                // If successful, add a success message to the model
                 model.addAttribute("successMessage", "Student added successfully.");
             } else {
-                // If not successful, add an error message to the model
                 model.addAttribute("errorMessage", "Failed to add student. Please try again.");
             }
         } catch (Exception e) {
@@ -92,21 +90,6 @@ public class StudentsController {
         
         List<Student> studentList = studentsRepo.findBySid(studentID); //get student by sid
 
-        // if(studentList.isEmpty()){
-        //     model.addAttribute("errorMessage", "Failed to add student. Please try again.");
-        //     return "redirect:/students/datatable";
-        // }else{
-        //     Student student = studentList.get(0);
-        //     student.setName(newName);
-        //     student.setWeight(newWeight);
-        //     student.setHeight(newHeight);
-        //     student.setGpa(newGpa);
-        //     student.setHairColor(newHairColor);
-        //     student.setGender(newGender);
-        //     return "redirect:/students/datatable";
-            
-        // }
-
         if(studentList.isEmpty()){
             model.addAttribute("errorMessage", "There is no such student. Please try again.");
         }else{
@@ -130,7 +113,7 @@ public class StudentsController {
 
     @GetMapping("/students/display")
     public String getStudentsBoxes(Model model) {
-        List<Student> students = studentsRepo.findAll(); // db
+        List<Student> students = studentsRepo.findAll(); 
         model.addAttribute("std", students);
         return "students/display";
     }
