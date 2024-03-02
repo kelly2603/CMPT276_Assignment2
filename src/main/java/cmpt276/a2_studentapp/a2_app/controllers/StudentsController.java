@@ -62,7 +62,7 @@ public class StudentsController {
             model.addAttribute("errorMessage", "An error occurred while adding the student: " + e.getMessage());
         }
 
-        return "students/datatable";
+        return "redirect:/students/datatable";
     }
     
     //deleting student
@@ -79,7 +79,7 @@ public class StudentsController {
     }
 
     @PostMapping("/students/edit")
-    public String editStudent(@RequestParam Map<String, String> editstudent, HttpServletResponse response) {
+    public String editStudent(@RequestParam Map<String, String> editstudent, HttpServletResponse response, Model model) {
         System.out.println("Edit student");
 
         int studentID = Integer.parseInt(editstudent.get("studentId"));
@@ -92,19 +92,40 @@ public class StudentsController {
         
         List<Student> studentList = studentsRepo.findBySid(studentID); //get student by sid
 
+        // if(studentList.isEmpty()){
+        //     model.addAttribute("errorMessage", "Failed to add student. Please try again.");
+        //     return "redirect:/students/datatable";
+        // }else{
+        //     Student student = studentList.get(0);
+        //     student.setName(newName);
+        //     student.setWeight(newWeight);
+        //     student.setHeight(newHeight);
+        //     student.setGpa(newGpa);
+        //     student.setHairColor(newHairColor);
+        //     student.setGender(newGender);
+        //     return "redirect:/students/datatable";
+            
+        // }
+
         if(studentList.isEmpty()){
-            //do other error handling
-            return "/students/edit";
+            model.addAttribute("errorMessage", "There is no such student. Please try again.");
         }else{
-            Student student = studentList.get(0);
-            student.setName(newName);
-            student.setWeight(newWeight);
-            student.setHeight(newHeight);
-            student.setGpa(newGpa);
-            student.setHairColor(newHairColor);
-            student.setGender(newGender);
-            return "students/datatable";
+            try {
+                Student student = studentList.get(0);
+                student.setName(newName);
+                student.setWeight(newWeight);
+                student.setHeight(newHeight);
+                student.setGpa(newGpa);
+                student.setHairColor(newHairColor);
+                student.setGender(newGender);
+    
+                model.addAttribute("successMessage", "Student added successfully.");
+            } catch (Exception e) {
+                // If an exception occurs during the save operation, add an error message to the model
+                model.addAttribute("errorMessage", "An error occurred while adding the student: " + e.getMessage());
+            }
         }
+        return "redirect:/students/datatable";
     }
 
     @GetMapping("/students/display")
