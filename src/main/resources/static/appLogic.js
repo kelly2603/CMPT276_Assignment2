@@ -27,6 +27,14 @@ delButton.addEventListener("click", handleDeleteButton)
 displayButton.addEventListener("click", showDisplay)
 doneButton.addEventListener("click", handleDoneButton)
 
+function displayDoneBtn(){
+    doneButton.style.display = "inline-block";
+    addButton.style.display = "none";
+    editButton.style.display = "none";
+    delButton.style.display = "none";
+    displayButton.style.display = "none";
+}
+
 //===================== ADD FUNCTION =======================
 
 function handleAddButton(){
@@ -88,26 +96,19 @@ function handleEditButton(){
         if (!e.target.classList.contains('std-btn')) {
             return;
         }
-        const btn = e.target;
-        const studentID = btn.getAttribute("student-id");
 
         formElement.style.display = "block";
-        formElement.addEventListener("submit", onEditStd(studentID));
     });
-}
-
-function onEditStd(studentID){
-    
 }
 
 //===================== DISPLAY FUNCTIONS ====================
 function showDisplay(){
-    window.location.href = "/students/display.html";
+    window.location.href = "/students/display";
 }
 
 //======================== DONE BUTTON ========================
 function handleDoneButton(){
-    window.location.href = "/students/datatable.html";
+    window.location.href = "/students/datatable";
 }
 
 startApp();

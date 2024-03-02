@@ -39,7 +39,7 @@ public class StudentsController {
     
     //adding student process after form is submitted
     @PostMapping("/students/add")
-    public String addStudent(@RequestParam Map<String, String> newstudent, HttpServletResponse response) {
+    public String addStudent(@RequestParam Map<String, String> newstudent, HttpServletResponse response, Model model) {
         System.out.println("ADD student");
         String newName = newstudent.get("name");
         int newWeight = Integer.parseInt(newstudent.get("weight"));
@@ -48,10 +48,22 @@ public class StudentsController {
         int newGpa = Integer.parseInt(newstudent.get("gpa"));
         String newGender = newstudent.get("gender");
 
-        //add student
-        studentsRepo.save(new Student(newName, newWeight, newHeight, newHairColor, newGpa, newGender));
-        
-        response.setStatus(HttpServletResponse.SC_CREATED);
+        try {
+            // Save the student to the database
+            Student savedStudent = studentsRepo.save(new Student(newName, newWeight, newHeight, newHairColor, newGpa, newGender));
+    
+            // Check if the save operation was successful
+            if (savedStudent != null) {
+                // If successful, add a success message to the model
+                model.addAttribute("successMessage", "Student added successfully.");
+            } else {
+                // If not successful, add an error message to the model
+                model.addAttribute("errorMessage", "Failed to add student. Please try again.");
+            }
+        } catch (Exception e) {
+            // If an exception occurs during the save operation, add an error message to the model
+            model.addAttribute("errorMessage", "An error occurred while adding the student: " + e.getMessage());
+        }
 
         return "students/datatable";
     }
@@ -97,13 +109,13 @@ public class StudentsController {
             return "students/datatable";
         }
     }
-    /* 
-    */
 
-    // @PostMapping("/students/display")
-    // public String displayStudent(){
-        
-    // }
+    @GetMapping("/students/display")
+    public String getStudentsBoxes(Model model) {
+        List<Student> students = studentsRepo.findAll(); // db
+        model.addAttribute("std", students);
+        return "students/display";
+    }
 
 }   
 

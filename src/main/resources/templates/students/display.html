@@ -10,7 +10,7 @@
     <div class="app">
         <div id="display-board">
             <ul>
-                <li th:each="user:${us}">
+                <li th:each="student:${std}">
                     <span th:text="${student.name + ' ' + student.gpa}" 
                           style="display: block"
                           th:style="'width: '+${student.weight}*0.7+'px';
@@ -21,7 +21,7 @@
             </ul>
         </div>
         <div class="btns-container">
-            <button class="nav-btns" id="done-btn">Back</button>
+            <button class="nav-btns" id="done-btn" display="block">Back</button>
         </div>
     </div>
     <script src="/appLogic.js" defer></script>
